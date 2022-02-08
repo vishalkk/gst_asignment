@@ -13,7 +13,7 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 175),
       child: AppBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.green,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(
             top: 20.0,
