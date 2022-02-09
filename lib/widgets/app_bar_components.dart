@@ -25,16 +25,22 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+                children: const [
+                  // IconButton(
+                  //   onPressed: () {
+                  //     Navigator.pop(context);
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.arrow_back,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 40,
+                      top: 20,
+                      bottom: 20
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
                     child: Text(
                       'Gst Profile',
                       style: TextStyle(
@@ -74,7 +80,7 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(

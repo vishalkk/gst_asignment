@@ -1,10 +1,12 @@
 import 'dart:core';
 import 'package:dio/dio.dart';
+import 'package:gst_in/model/list_users.dart';
 
 class HttpServices {
   // http dio client
   late Dio _dio;
-  final baseUrl = "https://517f9e00-5f2f-4c63-b647-10e394a083eb.mock.pstmn.io/";
+  final baseUrl =
+      "https://517f9e00-5f2f-4c63-b647-10e394a083eb.mock.pstmn.io/v2/demo";
   HttpServices() {
     _dio = Dio(BaseOptions(
       baseUrl: baseUrl,
@@ -14,16 +16,16 @@ class HttpServices {
     intilizeInterceptors();
   }
 
-  Future<Response> getRequest(String endPoint) async {
+  Future<ListUsers> search() async {
     Response response;
     try {
-      response = await _dio.get(endPoint);
+      response = await _dio.get(baseUrl);
     } on DioError catch (e) {
       // ignore: avoid_print
       print(e.message);
       throw Exception(e.message);
     }
-    return response;
+    return ListUsers.fromJson(response.data);
   }
 
   intilizeInterceptors() {
