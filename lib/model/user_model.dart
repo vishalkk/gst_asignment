@@ -23,7 +23,7 @@ class UserModel {
 
   @JsonKey(name: "dateOfRegistration")
   String dateOfRegistration;
-  
+
   UserModel(
     this.id,
     this.name,

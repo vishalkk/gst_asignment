@@ -14,8 +14,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 223, 223, 223),
       appBar: const PreferredSize(
-          preferredSize: Size(double.infinity, 175),
-          child: ProfileTopBarContents()),
+        preferredSize: Size(double.infinity, 175),
+        child: ProfileTopBarContents(),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -266,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 8.0, left: 8.0),
+                    padding: EdgeInsets.only(top: 8.0, left: 20.0),
                     height: 30,
                     child: Row(
                       children: const [
@@ -318,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
