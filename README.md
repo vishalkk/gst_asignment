@@ -1,4 +1,5 @@
 # gst_in
+## Type GST number = 1111
 
 A new Flutter project.
 
