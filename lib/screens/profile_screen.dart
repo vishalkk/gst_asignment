@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gst_in/bloc/search_bloc.dart';
+import 'package:gst_in/model/list_users.dart';
+import 'package:gst_in/model/user_model.dart';
 import 'package:gst_in/widgets/app_bar_components.dart';
+import 'package:gst_in/widgets/error_element.dart';
+
+import '../widgets/loader_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  //final UserModel user;
+  const ProfileScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -11,11 +20,32 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<UserModel>(
+      stream: searchBloc.subject.stream,
+      builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data! == null || snapshot.hasError) {
+            return buildErrorWidget(snapshot.data!.toString());
+          }
+
+          return _buildProfile(snapshot.data!);
+        } else {
+          print('${snapshot.error}');
+          return Center(child: buildLoadingWidget());
+        }
+      },
+    );
+  }
+
+  Widget _buildProfile(UserModel data) {
+    UserModel user = data;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 223, 223, 223),
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 175),
-        child: ProfileTopBarContents(),
+      backgroundColor:const Color.fromARGB(255, 223, 223, 223),
+      appBar: PreferredSize(
+        preferredSize:const Size(double.infinity, 175),
+        child: ProfileTopBarContents(
+          users: user,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -52,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+                          padding:  EdgeInsets.only(left: 8.0, top: 10.0),
                           child: Text(
                             'Principle Place of Business',
                             style: TextStyle(
@@ -76,16 +106,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: const Color.fromARGB(255, 157, 247, 160),
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 40,
                           width: 300,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 20.0, right: 8.0),
+                            padding:const EdgeInsets.only(left: 20.0, right: 8.0),
                             child: Text(
-                              'K-37, floor-,, Mandoli industrial Area, Nort East, Delhi, Delhi, 110093',
+                              user.address,
                               maxLines: 5,
                               softWrap: true,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ),
                         )
@@ -205,20 +235,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 100,
                     color: Colors.white,
                     child: Column(
-                      children: const [
+                      children:  [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding:const EdgeInsets.all(8.0),
                           child: Text(
-                            'Taxpayer Type',
-                            style: TextStyle(
+                            user.taxPrayerType,
+                            style:const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.grey),
                           ),
                         ),
                         Text(
-                          'Regular',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          user.businessType,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -235,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 8.0, left: 8.0),
+                    padding: const EdgeInsets.only(top: 8.0, left: 8.0),
                     height: 30,
                     child: const Text(
                       'Constitution of Business',
@@ -246,17 +276,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const Padding(
+                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      'Private Limited Company',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      user.name,
+                      style:const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Container(
@@ -267,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 8.0, left: 20.0),
+                    padding:const  EdgeInsets.only(top: 8.0, left: 8.0),
                     height: 30,
                     child: Row(
                       children: const [
@@ -280,21 +310,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Spacer(),
-                        Text(
-                          'Date of Cancelation',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
+                        Padding(
+                          padding: EdgeInsets.only(right:8.0),
+                          child: Text(
+                            'Date of Cancelation',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
                     child: Text(
-                      '16/05/2011',
+                      user.dateOfRegistration,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

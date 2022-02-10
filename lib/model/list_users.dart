@@ -1,18 +1,18 @@
+import 'dart:convert';
 import 'package:gst_in/model/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-
-
 part 'list_users.g.dart';
+
+
+// ListUsers apiModelFromJson(String str) => ListUsers.fromJson(json.decode(str));
 
 @JsonSerializable()
 class ListUsers {
- 
   @JsonKey(name: "data")
-  List<UserModel> users;
+  UserModel users;
 
   ListUsers({
-  
     required this.users,
   });
 

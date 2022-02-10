@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gst_in/bloc/search_bloc.dart';
-import 'package:gst_in/screens/profile_screen.dart';
 
+import 'package:gst_in/bloc/search_bloc.dart';
+
+import 'package:gst_in/screens/profile_screen.dart';
 import 'package:gst_in/widgets/search_bar_contents.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,12 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _searchController = TextEditingController();
-  bool isShowUser = false;
 
   @override
   void initState() {
     super.initState();
-    searchBloc.search("");
+    //searchBloc.search("");
   }
 
   @override
@@ -61,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.shade100,
-                    borderRadius: new BorderRadius.circular(10.0)),
+                    borderRadius: BorderRadius.circular(10.0)),
                 height: 60,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
@@ -76,12 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       border: InputBorder.none,
                       fillColor: Colors.green,
                     ),
-                    // onFieldSubmitted: (String _) {
-                    //   // setState(() {
-                    //   //   isShowUser = true;
-                    //   // });
-                    //   // print(_);
-                    // },
+                    onFieldSubmitted: (String _) {
+                      setState(() {
+                        searchBloc.search(_searchController.text);
+                      });
+                    },
                   ),
                 ),
               ),
@@ -95,10 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()),
-                  );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ));
                 },
                 style: ElevatedButton.styleFrom(primary: Colors.green),
                 child: const Text(
@@ -106,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

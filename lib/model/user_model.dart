@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 part 'user_model.g.dart';
+
+//UserModel apiModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+
 
 @JsonSerializable()
 class UserModel {
@@ -10,7 +16,7 @@ class UserModel {
   String name;
 
   @JsonKey(name: "status")
-  String firstName;
+  String status;
 
   @JsonKey(name: "address")
   String address;
@@ -19,19 +25,22 @@ class UserModel {
   String taxPrayerType;
 
   @JsonKey(name: "busnessType")
-  String busnessType;
+  String businessType;
 
   @JsonKey(name: "dateOfRegistration")
   String dateOfRegistration;
 
+
+
   UserModel(
     this.id,
     this.name,
-    this.firstName,
+  
     this.address,
     this.taxPrayerType,
-    this.busnessType,
+    this.businessType,
     this.dateOfRegistration,
+    this.status,
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>

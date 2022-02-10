@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'package:dio/dio.dart';
-import 'package:gst_in/model/list_users.dart';
+import 'package:gst_in/model/user_model.dart';
+import 'dart:convert';
+import '../model/list_users.dart';
 
 class HttpServices {
   // http dio client
@@ -16,16 +18,20 @@ class HttpServices {
     intilizeInterceptors();
   }
 
-  Future<ListUsers> search() async {
+  Future<UserModel> search(String searchValue) async {
     Response response;
+    var params = {
+      "q": searchValue,
+    };
+
     try {
-      response = await _dio.get(baseUrl);
+      response = await _dio.get(baseUrl, queryParameters: params);
     } on DioError catch (e) {
       // ignore: avoid_print
       print(e.message);
       throw Exception(e.message);
     }
-    return ListUsers.fromJson(response.data);
+    return UserModel.fromJson(jsonDecode(response.data));
   }
 
   intilizeInterceptors() {

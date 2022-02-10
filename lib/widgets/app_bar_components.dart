@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 
+import 'package:gst_in/model/list_users.dart';
+import 'package:gst_in/model/user_model.dart';
+import 'package:gst_in/model/model.dart';
+// TODO: adding content to field
 class ProfileTopBarContents extends StatefulWidget {
-  const ProfileTopBarContents({Key? key}) : super(key: key);
+  final UserModel users;
+  const ProfileTopBarContents({
+    Key? key,
+    required this.users,
+  }) : super(key: key);
 
   @override
-  _ProfileTopBarContentsState createState() => _ProfileTopBarContentsState();
+  _ProfileTopBarContentsState createState() => _ProfileTopBarContentsState(users);
 }
 
 class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
+   final UserModel users;
+
+  _ProfileTopBarContentsState(this.users);
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
@@ -36,11 +47,7 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
                   //   ),
                   // ),
                   Padding(
-                    padding: EdgeInsets.only(
-                      left: 40,
-                      top: 20,
-                      bottom: 20
-                    ),
+                    padding: EdgeInsets.only(left: 40, top: 20, bottom: 20),
                     child: Text(
                       'Gst Profile',
                       style: TextStyle(
@@ -61,21 +68,21 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
                   style: TextStyle(fontSize: 10, color: Colors.white70),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                   left: 8.0,
                   bottom: 8.0,
                   right: 8.0,
                 ),
                 child: Text(
-                  '1111',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
+                  users.id.toString(),
+                  style: const TextStyle(fontSize: 15, color: Colors.white),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Masters India Private Limited',
+                  users.name,
                   style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
               ),
@@ -100,8 +107,8 @@ class _ProfileTopBarContentsState extends State<ProfileTopBarContents> {
                         const SizedBox(
                           width: 10,
                         ),
-                        const Text(
-                          'status',
+                        Text(
+                          users.status,
                           style: TextStyle(color: Colors.green),
                         ),
                       ],
